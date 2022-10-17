@@ -43,17 +43,20 @@ public class MyLinkedList {
             //if x first element;
             first = next;
             next.prev = null;
+            x.prev = null;
         } else if (next == null) {
             //if x last element
             last = x.prev;
             last.next = null;
+            x.next = null;
         } else {
             //x not first nor last
             prev.next = next;
             next.prev = prev;
+            x.next = x.prev = null;
         }
         size--;
-        x.next = x.prev = null;
+
 
     }
     public Object get(int index){
