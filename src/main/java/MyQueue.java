@@ -27,7 +27,7 @@ public class MyQueue {
 
     void add(Object o) {
         final MyQueue.Node l = last;
-        final MyQueue.Node newNode = new MyQueue.Node(l, null);
+        final MyQueue.Node newNode = new MyQueue.Node(o, null);
         last = newNode;
         if (l == null)
             first = newNode;
