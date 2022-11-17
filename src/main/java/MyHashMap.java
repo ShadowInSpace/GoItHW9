@@ -64,9 +64,9 @@ public class MyHashMap {
     public void put (Object key, Object value){
         boolean notFound = true;
         Node newNode = createNode(key,value);
-        Node bucket = body[newNode.hash%DEFAULT_INITIAL_CAPACITY];
+        Node bucket = body[normaliseIndex(key)];
         if(bucket==null){
-            body[newNode.hash%DEFAULT_INITIAL_CAPACITY]=newNode;
+            body[normaliseIndex(key)]=newNode;
         }else {
             while(notFound){
                 if(newNode.equals(bucket)) {
@@ -85,17 +85,17 @@ public class MyHashMap {
     }
 
     public void remove(Object key){
-        Node bucket = body[hash(key)%DEFAULT_INITIAL_CAPACITY];
+        Node bucket = body[normaliseIndex(key)];
         boolean notFound = true;
         if(bucket!=null) {
 
             if (bucket.key.equals(key)) {
                 if (bucket.next == null) {
-                    body[hash(key) % DEFAULT_INITIAL_CAPACITY] = null;
+                    body[normaliseIndex(key)] = null;
                     size--;
                     notFound = false;
                 } else {
-                    body[hash(key) % DEFAULT_INITIAL_CAPACITY] = bucket.next;
+                    body[normaliseIndex(key)] = bucket.next;
                     size--;
                     notFound = false;
                 }
@@ -125,7 +125,35 @@ public class MyHashMap {
             return;
         }
     }
-    public
+    public void clear(){
+        body = new Node[DEFAULT_INITIAL_CAPACITY];
+        size=0;
+    }
+
+    public Object get(Object key)throws IllegalArgumentException{
+        Node bucket = body[normaliseIndex(key)];
+        boolean notFound = true;
+        Object answer=null;
+        while (notFound){
+            if(bucket==null)throw new IllegalArgumentException();
+            if(bucket.getKey().equals(key)){
+                notFound=false;
+                answer = bucket.getValue();
+            } else {
+                bucket=bucket.next;
+            }
+        }
+        return answer;
+    }
+
+    private int normaliseIndex(Object key){
+        int notNormaliseIndex=hash(key)%DEFAULT_INITIAL_CAPACITY;
+        if(notNormaliseIndex<0){
+            return notNormaliseIndex*(-1);
+        } else{
+            return notNormaliseIndex;
+        }
+    }
 
 
 
