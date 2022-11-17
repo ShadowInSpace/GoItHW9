@@ -8,6 +8,10 @@ public class MyHashMap {
     private Node[] body = new Node[DEFAULT_INITIAL_CAPACITY];
     private int size=0;
 
+    public int size(){
+        return size;
+    }
+
     static class Node {
         final int hash;
         final Object key;
@@ -79,5 +83,49 @@ public class MyHashMap {
             }
         }
     }
+
+    public void remove(Object key){
+        Node bucket = body[hash(key)%DEFAULT_INITIAL_CAPACITY];
+        boolean notFound = true;
+        if(bucket!=null) {
+
+            if (bucket.key.equals(key)) {
+                if (bucket.next == null) {
+                    body[hash(key) % DEFAULT_INITIAL_CAPACITY] = null;
+                    size--;
+                    notFound = false;
+                } else {
+                    body[hash(key) % DEFAULT_INITIAL_CAPACITY] = bucket.next;
+                    size--;
+                    notFound = false;
+                }
+
+            } else {
+                bucket = bucket.next;
+
+                while (notFound) {
+
+                    if (bucket.key.equals(key)) {
+                        if (bucket.next == null) {
+                            bucket = null;
+                            size--;
+                            notFound = false;
+                        } else {
+                            bucket = bucket.next;
+                            size--;
+                            notFound = false;
+                        }
+                    } else {
+                        if(bucket.next==null) return;
+                        bucket = bucket.next;
+                    }
+                }
+            }
+        } else {
+            return;
+        }
+    }
+
+
 
 }
