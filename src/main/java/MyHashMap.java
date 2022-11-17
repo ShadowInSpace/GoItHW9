@@ -53,6 +53,7 @@ public class MyHashMap {
         return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);
     }
     private Node createNode(Object key, Object value){
+        size++;
         return new Node(hash(key),key,value,null);
     }
 
@@ -64,6 +65,10 @@ public class MyHashMap {
             bucket=newNode;
         }else {
             while(notFound){
+                if(newNode.equals(bucket)) {
+                    size--;
+                    notFound=false;
+                }
                 if(bucket.next==null){
                     bucket.next=newNode;
                     notFound=false;
