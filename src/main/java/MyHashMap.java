@@ -5,7 +5,8 @@ import java.util.Objects;
 public class MyHashMap {
 
     private static final int DEFAULT_INITIAL_CAPACITY = 16;
-    private Object[] body = new Node[DEFAULT_INITIAL_CAPACITY];
+    private Node[] body = new Node[DEFAULT_INITIAL_CAPACITY];
+    private int size=0;
 
     static class Node {
         final int hash;
@@ -52,7 +53,19 @@ public class MyHashMap {
         return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);
     }
     private Node createNode(Object key, Object value){
-        return new Node(MyHashMap.hash(key),key,value,null);
+        return new Node(hash(key),key,value,null);
+    }
+
+    public void put (Object key, Object value){
+        Node newNode = createNode(key,value);
+        Node bucket = body[newNode.hash%DEFAULT_INITIAL_CAPACITY];
+        if(bucket==null){
+            bucket=newNode;
+        }else {
+            while(true){
+
+            }
+        }
     }
 
 }
