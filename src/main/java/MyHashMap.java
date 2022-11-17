@@ -57,12 +57,19 @@ public class MyHashMap {
     }
 
     public void put (Object key, Object value){
+        boolean notFound = true;
         Node newNode = createNode(key,value);
         Node bucket = body[newNode.hash%DEFAULT_INITIAL_CAPACITY];
         if(bucket==null){
             bucket=newNode;
         }else {
-            while(true){
+            while(notFound){
+                if(bucket.next==null){
+                    bucket.next=newNode;
+                    notFound=false;
+                } else {
+                    bucket=bucket.next;
+                }
 
             }
         }
