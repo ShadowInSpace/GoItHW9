@@ -51,4 +51,8 @@ public class MyHashMap {
         int h;
         return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);
     }
+    private Node createNode(Object key, Object value){
+        return new Node(MyHashMap.hash(key),key,value,null);
+    }
+
 }
