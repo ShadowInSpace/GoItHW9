@@ -66,7 +66,7 @@ public class MyHashMap {
         Node newNode = createNode(key,value);
         Node bucket = body[newNode.hash%DEFAULT_INITIAL_CAPACITY];
         if(bucket==null){
-            bucket=newNode;
+            body[newNode.hash%DEFAULT_INITIAL_CAPACITY]=newNode;
         }else {
             while(notFound){
                 if(newNode.equals(bucket)) {
@@ -125,6 +125,7 @@ public class MyHashMap {
             return;
         }
     }
+    public
 
 
 
